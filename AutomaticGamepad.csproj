@@ -1,22 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="packages\Microsoft.ClearScript.V8.Native.win-x64.7.2.3\build\Microsoft.ClearScript.V8.Native.win-x64.props" Condition="Exists('packages\Microsoft.ClearScript.V8.Native.win-x64.7.2.3\build\Microsoft.ClearScript.V8.Native.win-x64.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{21E4322D-1ED5-460E-9E58-0B54757BCD90}</ProjectGuid>
     <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>false</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>AutomaticGamepad</RootNamespace>
-    <AssemblyName>AutomaticGamepad</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <ApplicationIcon>Resources\ico.ico</ApplicationIcon>
+    <StartupObject>AutomaticGamepad.Program</StartupObject>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems> <!-- Add this line -->
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems> <!-- Also add this line if needed -->
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">frf
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -26,6 +24,7 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -36,22 +35,13 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>Resources\ico.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>AutomaticGamepad.Program</StartupObject>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="ClearScript.Core, Version=7.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.ClearScript.Core.7.2.3\lib\net471\ClearScript.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="ClearScript.V8, Version=7.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.ClearScript.V8.7.2.3\lib\net471\ClearScript.V8.dll</HintPath>
-    </Reference>
-    <Reference Include="Nefarius.ViGEm.Client, Version=1.17.178.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Nefarius.ViGEm.Client.1.17.178\lib\net452\Nefarius.ViGEm.Client.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Microsoft.ClearScript.V8" Version="7.4.5" />
+    <PackageReference Include="Nefarius.ViGEm.Client" Version="1.21.256" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -66,6 +56,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
+
   <ItemGroup>
     <Compile Include="ConfigManager.cs" />
     <Compile Include="Gamepad.cs" />
@@ -80,13 +71,6 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Misc\ImageExtensions.cs" />
-    <Compile Include="PlayStation\PlaystationGamepad.cs" />
-    <Compile Include="PlayStation\PlayStationController.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PlayStation\PlayStationController.Designer.cs">
-      <DependentUpon>PlayStationController.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Language_Chinese.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -105,15 +89,14 @@
     </Compile>
     <Compile Include="Xbox\XboxGamepad.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="MainForm.en-US.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PlayStation\PlayStationController.resx">
-      <DependentUpon>PlayStationController.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Language_English.resx" />
     <EmbeddedResource Include="Properties\Language_Chinese.resx">
@@ -128,6 +111,10 @@
     <EmbeddedResource Include="Xbox\XboxController.resx">
       <DependentUpon>XboxController.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -138,42 +125,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\ico.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\xbox.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\ps5.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\arrow_black.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\xbox_controller.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\playstation_controller.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\arrow_white.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\point.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Image1.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('packages\Microsoft.ClearScript.V8.Native.win-x64.7.2.3\build\Microsoft.ClearScript.V8.Native.win-x64.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.ClearScript.V8.Native.win-x64.7.2.3\build\Microsoft.ClearScript.V8.Native.win-x64.props'))" />
-  </Target>
+
 </Project>

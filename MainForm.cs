@@ -70,9 +70,6 @@ namespace AutomaticGamepad
                 case GamepadType.Xbox:
                     Gamepad = new XboxGamepad();
                     break;
-                case GamepadType.PlayStation:
-                    Gamepad = new PlaystationGamepad();
-                    break;
             }
             Gamepad.Connect();
 
@@ -80,9 +77,6 @@ namespace AutomaticGamepad
             {
                 case GamepadType.Xbox:
                     m_ControllerForm = new XboxController();
-                    break;
-                case GamepadType.PlayStation:
-                    m_ControllerForm = new PlayStationController();
                     break;
             }
             m_ControllerForm.MainForm = this;
